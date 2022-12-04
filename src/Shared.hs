@@ -1,10 +1,18 @@
 module Shared where
 
-runSolution :: (Show b1, Show b2) => (String -> b1) -> (String -> b2) -> Int -> IO ()
-runSolution solve1 solve2 day = do
+import Data.Void ( Void )
+import Text.Megaparsec ( Parsec, runParser )
+
+
+type Parser = Parsec Void String
+
+runSolution :: (Show b1, Show b2) => Parser a -> (a -> b1) -> (a -> b2) -> Int -> IO ()
+runSolution parser solve1 solve2 day = do
     let dayStr = show day
     input <- readFile ("inputs/day" ++ dayStr ++ ".txt")
     putStrLn ("\n=== Day " ++ dayStr ++ " ===")
-    print . solve1 $ input
-    print . solve2 $ input
+    case runParser parser "" input of
+        Left e -> putStrLn ("parser error: " ++ show e)
+        Right parsed -> do print . solve1 $ parsed
+                           print . solve2 $ parsed
     putStrLn ""

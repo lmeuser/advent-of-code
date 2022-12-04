@@ -9,3 +9,4 @@ executable:
 dependencies:
   - base
   - split
+  - megaparsec

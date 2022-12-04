@@ -1,20 +1,17 @@
 module Days.Day1 where
 
-import Data.List (sortBy)
-import Data.List.Split (splitOn)
+import Data.List ( sortBy )
+import Text.Megaparsec
+import Text.Megaparsec.Char
+import Text.Megaparsec.Char.Lexer
 
-import Shared (runSolution)
+import Shared ( runSolution )
 
 
-elves :: String -> [[Integer]]
-elves = map (map read . lines) . splitOn "\n\n"
+parser = sortBy (flip compare) . map sum <$> sepBy (endBy decimal newline) newline
 
-elfTotals :: String -> [Integer]
-elfTotals = map sum . elves
+solve1 = head
 
-elfData = sortBy (flip compare) . elfTotals
+solve2 = sum . take 3
 
-solve1 = (!! 0) . elfData
-solve2 = sum . take 3 . elfData
-
-solution = runSolution solve1 solve2
+solution = runSolution parser solve1 solve2

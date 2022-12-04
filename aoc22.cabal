@@ -21,5 +21,6 @@ executable aoc22
       src
   build-depends:
       base
+    , megaparsec
     , split
   default-language: Haskell2010

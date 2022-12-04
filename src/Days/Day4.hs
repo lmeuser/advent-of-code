@@ -1,17 +1,16 @@
 module Days.Day4 where
-import Shared (runSolution)
-
-parseLine :: String -> [Integer]
-parseLine = map read . numbers [] []
-  where numbers r c [] = r ++ [c]
-        numbers r c (x:xs)
-          | x `elem` "-," = numbers (r ++ [c]) [] xs
-          | otherwise     = numbers r (c ++ [x]) xs
+import Shared ( runSolution, Parser )
+import Text.Megaparsec
+import Text.Megaparsec.Char
+import Text.Megaparsec.Char.Lexer ( decimal )
 
 
-solution1 = toInteger . length . filter (\[a, b, c, d] -> (a >= c && b <= d) || (a <= c && b >= d))
-solution2 = toInteger . length . filter (\[a, b, c, d] -> c <= b && a <= d)
+parser = sepBy line newline
+  where line = (,,,) <$> (decimal <* char '-') <*> (decimal <* char ',') <*> (decimal <* char '-') <*> decimal
 
+countPairs f = length . filter f
 
-solution = runSolution (solution1 . pairs) (solution2 . pairs)
-  where pairs = map parseLine . lines
+solve1 = countPairs (\(a, b, c, d) -> (a >= c && b <= d) || (a <= c && b >= d))
+solve2 = countPairs (\(a, b, c, d) -> c <= b && a <= d)
+
+solution = runSolution parser solve1 solve2

@@ -6,8 +6,6 @@ import qualified Days.Day2
 import qualified Days.Day3
 import qualified Days.Day4
 
-
-
 days = [ Days.Day1.solution
        , Days.Day2.solution
        , Days.Day3.solution

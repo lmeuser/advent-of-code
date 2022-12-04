@@ -1,25 +1,24 @@
 module Days.Day3 where
 
-import Data.Char (ord)
-import Shared (runSolution)
+import Data.Char ( ord )
+import Data.List.Split ( chunksOf )
+import Text.Megaparsec
+import Text.Megaparsec.Char
 
-common [x] = x
-common (x:xs) = filter (`elem` (common xs)) x
+import Shared ( runSolution )
+import Data.List ( intersect )
+
+
+parser = endBy (many letterChar) newline
 
 prio c
   | n > 90    = n - 96
   | otherwise = n - 38
   where n = ord c
 
+solve1 = sum . map (prio . head . uncurry intersect . split)
+  where split xs = splitAt (length xs `div` 2) xs
 
-solution1 input = sum . map (prio . head . common . \(a, b) -> [a, b]) $ rucksacks
-  where rucksacks = map (\x -> splitAt (length x `div` 2) x) . lines $ input
+solve2 = sum . map (prio . head . foldr1 intersect) . chunksOf 3
 
-
-splitGroups [] = []
-splitGroups xs = as:splitGroups bs
-  where (as, bs) = splitAt 3 xs
-
-solution2 = sum . map (prio . head . common) . splitGroups . lines
-
-solution = runSolution solution1 solution2
+solution = runSolution parser solve1 solve2
