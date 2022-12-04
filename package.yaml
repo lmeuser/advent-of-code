@@ -1,0 +1,11 @@
+name: aoc22
+version: 0.1.0
+
+source-dirs: src
+
+executable:
+  main: Main.hs
+
+dependencies:
+  - base
+  - split

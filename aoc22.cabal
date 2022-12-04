@@ -1,0 +1,25 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.35.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           aoc22
+version:        0.1.0
+build-type:     Simple
+
+executable aoc22
+  main-is: Main.hs
+  other-modules:
+      Days.Day1
+      Days.Day2
+      Days.Day3
+      Days.Day4
+      Shared
+      Paths_aoc22
+  hs-source-dirs:
+      src
+  build-depends:
+      base
+    , split
+  default-language: Haskell2010

@@ -1,4 +1,7 @@
+module Days.Day3 where
+
 import Data.Char (ord)
+import Shared (runSolution)
 
 common [x] = x
 common (x:xs) = filter (`elem` (common xs)) x
@@ -19,8 +22,4 @@ splitGroups xs = as:splitGroups bs
 
 solution2 = sum . map (prio . head . common) . splitGroups . lines
 
-
-main = do
-  input <- readFile "input.txt"
-  putStrLn . show . solution1 $ input
-  putStrLn . show . solution2 $ input
+solution = runSolution solution1 solution2

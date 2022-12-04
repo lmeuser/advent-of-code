@@ -1,3 +1,7 @@
+module Days.Day2 where
+
+import Shared (runSolution)
+
 data RPS = Rock | Paper | Scissors
   deriving (Show, Eq)
 
@@ -36,14 +40,7 @@ result x Paper = x
 
 solution2 = solution1 . map (\(a, b) -> (a, result a b))
 
-
-
 firstTwo (a:b:_) = (a, b)
 inpToRPS = map (firstTwo . map (toRPS . head) . words) . lines
 
-main = do
-  input <- readFile "input.txt"
-  let rpsData = inpToRPS input
-  
-  putStrLn . show . solution1 $ rpsData
-  putStrLn . show . solution2 $ rpsData
+solution = runSolution (solution1 . inpToRPS) (solution2 . inpToRPS)
