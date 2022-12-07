@@ -17,12 +17,14 @@ executable aoc22
       Days.Day4
       Days.Day5
       Days.Day6
+      Days.Day7
       Shared
       Paths_aoc22
   hs-source-dirs:
       src
   build-depends:
       base
+    , containers
     , megaparsec
     , split
   default-language: Haskell2010
