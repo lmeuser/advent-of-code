@@ -1,56 +1,35 @@
 module Days.Day7 where
 
-import Data.List (intercalate)
+import Data.List (intercalate, inits)
 import Data.List.Split (splitOn)
 import qualified Data.Map as M
-import Data.Map ((!))
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Text.Megaparsec.Char.Lexer
 import Shared (runSolution)
 
 
-data Command = CdCommand String | LsCommand [LsResult]
-data LsResult = FileResult String Int | DirectoryResult String
+data Command = Cd String | Ls [LsResult]
+data LsResult = File Int String | Directory String
 
-parser = many command
-  where command = cdCommand <|> lsCommand
-        cdCommand = CdCommand <$> (string "$ cd " *> many printChar <* newline)
-        lsCommand = LsCommand <$> (string "$ ls\n" *> sepEndBy lsResult newline)
-        lsResult = dirResult <|> fileResult
-        dirResult = DirectoryResult <$> (string "dir " *> many printChar)
-        fileResult = flip FileResult <$> (decimal <* hspace) <*> many printChar
+parser = M.elems . buildSizeMap M.empty "/" <$> many (cdCommand <|> lsCommand)
+  where cdCommand = Cd <$> (string "$ cd " *> many printChar <* newline)
+        lsCommand = Ls <$> (string "$ ls\n" *> sepEndBy (dirResult <|> fileResult) newline)
+        dirResult = Directory <$> (string "dir " *> many printChar)
+        fileResult = File <$> (decimal <* hspace) <*> many printChar
 
+        buildSizeMap m _ [] = m
+        buildSizeMap m dir (Cd path:cs) = buildSizeMap m path' cs
+          where path' = case path of
+                          "/" -> "/"
+                          ".." -> intercalate "/" . init . splitOn "/" $ dir
+                          into -> dir ++ '/':into
+        buildSizeMap m dir (Ls results:cs) = buildSizeMap (foldl step m results) dir cs
+          where step m (File s _) = foldl (\m' d -> M.insertWith (+) d s m') m (ancestorDirs dir)
+                step m (Directory _) = m
+                ancestorDirs = map (intercalate "/") . drop 2 . inits . splitOn "/"
 
-buildFileMap m _ [] = m
-buildFileMap m dir (x:xs) = case x of
-  CdCommand "/" -> buildFileMap m "/" xs
-  CdCommand ".." -> buildFileMap m (intercalate "/" . init . splitOn "/" $ dir) xs
-  CdCommand into -> buildFileMap m (dir ++ '/': into) xs
-  LsCommand results -> buildFileMap (foldl insertResult m results) dir xs
-  where insertResult om result = M.insertWith (++) dir [result] om
-
-data FileTree = File String Int | Directory String Int [FileTree]
-
-size (File _ size) = size
-size (Directory _ size _) = size
-
-buildFileTree :: M.Map String [LsResult] -> String -> FileTree
-buildFileTree m dir = let subtree = map buildSubTree (m ! dir)
-                          treeSize = sum . map size $ subtree
-                      in Directory dir treeSize subtree
-  where buildSubTree (FileResult name size) = File name size
-        buildSubTree (DirectoryResult name) = buildFileTree m (dir ++ '/':name)
-
-allDirectories (File _ _) = []
-allDirectories d@(Directory _ _ tree) = d:concatMap allDirectories tree
-
-allDirSizesFromInput cs = map size . allDirectories $ buildFileTree (buildFileMap M.empty "/" cs) "/"
-
-solve1 = sum . filter (<= 100000) . allDirSizesFromInput
-
-solve2 cs = minimum . filter (>neededSpace) $ dirs
-  where dirs = allDirSizesFromInput cs
-        neededSpace = head dirs - 40000000
+solve1 = sum . filter (<= 100000)
+solve2 cs = minimum . filter (> head cs - 40000000) $ cs
 
 solution = runSolution parser solve1 solve2
