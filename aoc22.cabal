@@ -18,6 +18,8 @@ executable aoc22
       Days.Day5
       Days.Day6
       Days.Day7
+      Days.Day8
+      Days.Day9
       Shared
       Paths_aoc22
   hs-source-dirs:
