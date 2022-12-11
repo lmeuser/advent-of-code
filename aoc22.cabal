@@ -13,6 +13,7 @@ executable aoc22
   other-modules:
       Days.Day1
       Days.Day10
+      Days.Day11
       Days.Day2
       Days.Day3
       Days.Day4

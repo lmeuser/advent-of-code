@@ -11,6 +11,7 @@ import qualified Days.Day7
 import qualified Days.Day8
 import qualified Days.Day9
 import qualified Days.Day10
+import qualified Days.Day11
 
 days = [ Days.Day1.solution
        , Days.Day2.solution
@@ -22,6 +23,7 @@ days = [ Days.Day1.solution
        , Days.Day8.solution
        , Days.Day9.solution
        , Days.Day10.solution
+       , Days.Day11.solution
        ]
 
 runDay day = (days !! (day - 1)) day
