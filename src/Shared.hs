@@ -16,7 +16,7 @@ runSolution :: (Show b1, Show b2) => Parser a -> (a -> b1) -> (a -> b2) -> Int -
 runSolution parser solve1 solve2 day year = do
     let dayStr = show day
     let yearStr = show year
-    input <- readFile ("inputs/day" ++ dayStr ++ ".txt")
+    input <- readFile ("inputs/year" ++ yearStr ++ "/day" ++ dayStr ++ ".txt")
     putStrLn ("\n=== Year " ++ yearStr ++ " -- Day " ++ dayStr ++ " ===")
     case runParser parser "" input of
         Left e -> putStrLn ("parser error: " ++ show e)
