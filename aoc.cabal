@@ -4,14 +4,15 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 
-name:           aoc22
+name:           aoc
 version:        0.1.0
 build-type:     Simple
 
-executable aoc22
+executable aoc
   main-is: Main.hs
   other-modules:
       Shared
+      Solutions.All
       Solutions.Year2022.Day1
       Solutions.Year2022.Day10
       Solutions.Year2022.Day11
@@ -28,11 +29,12 @@ executable aoc22
       Solutions.Year2022.Day7
       Solutions.Year2022.Day8
       Solutions.Year2022.Day9
-      Paths_aoc22
+      Paths_aoc
   hs-source-dirs:
       src
   build-depends:
       base
+    , cmdargs
     , containers
     , heap
     , megaparsec

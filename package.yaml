@@ -1,4 +1,4 @@
-name: aoc22
+name: aoc
 version: 0.1.0
 
 source-dirs: src
@@ -12,3 +12,4 @@ dependencies:
   - megaparsec
   - containers
   - heap
+  - cmdargs
