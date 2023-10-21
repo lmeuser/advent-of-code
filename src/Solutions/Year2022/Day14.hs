@@ -1,4 +1,4 @@
-module Days.Day14 where
+module Solutions.Year2022.Day14 where
 
 import qualified Data.Set as S
 import Text.Megaparsec

@@ -1,6 +1,6 @@
 {-# LANGUAGE TupleSections #-}
 
-module Days.Day12 where
+module Solutions.Year2022.Day12 where
 
 import qualified Data.Heap as H
 import Data.List (find)

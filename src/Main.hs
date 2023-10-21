@@ -1,39 +1,39 @@
 import System.Environment (getArgs)
 import Text.Read (readMaybe)
 
-import qualified Days.Day1
-import qualified Days.Day2
-import qualified Days.Day3
-import qualified Days.Day4
-import qualified Days.Day5
-import qualified Days.Day6
-import qualified Days.Day7
-import qualified Days.Day8
-import qualified Days.Day9
-import qualified Days.Day10
-import qualified Days.Day11
-import qualified Days.Day12
-import qualified Days.Day13
-import qualified Days.Day14
-import qualified Days.Day15
-import qualified Days.Day16
+import qualified Solutions.Year2022.Day1
+import qualified Solutions.Year2022.Day2
+import qualified Solutions.Year2022.Day3
+import qualified Solutions.Year2022.Day4
+import qualified Solutions.Year2022.Day5
+import qualified Solutions.Year2022.Day6
+import qualified Solutions.Year2022.Day7
+import qualified Solutions.Year2022.Day8
+import qualified Solutions.Year2022.Day9
+import qualified Solutions.Year2022.Day10
+import qualified Solutions.Year2022.Day11
+import qualified Solutions.Year2022.Day12
+import qualified Solutions.Year2022.Day13
+import qualified Solutions.Year2022.Day14
+import qualified Solutions.Year2022.Day15
+-- import qualified Solutions.Year2022.Day16
 
-days = [ Days.Day1.solution
-       , Days.Day2.solution
-       , Days.Day3.solution
-       , Days.Day4.solution
-       , Days.Day5.solution
-       , Days.Day6.solution
-       , Days.Day7.solution
-       , Days.Day8.solution
-       , Days.Day9.solution
-       , Days.Day10.solution
-       , Days.Day11.solution
-       , Days.Day12.solution
-       , Days.Day13.solution
-       , Days.Day14.solution
-       , Days.Day15.solution
-       , Days.Day16.solution
+days = [ Solutions.Year2022.Day1.solution
+       , Solutions.Year2022.Day2.solution
+       , Solutions.Year2022.Day3.solution
+       , Solutions.Year2022.Day4.solution
+       , Solutions.Year2022.Day5.solution
+       , Solutions.Year2022.Day6.solution
+       , Solutions.Year2022.Day7.solution
+       , Solutions.Year2022.Day8.solution
+       , Solutions.Year2022.Day9.solution
+       , Solutions.Year2022.Day10.solution
+       , Solutions.Year2022.Day11.solution
+       , Solutions.Year2022.Day12.solution
+       , Solutions.Year2022.Day13.solution
+       , Solutions.Year2022.Day14.solution
+       , Solutions.Year2022.Day15.solution
+    --    , Solutions.Day16.solution
        ]
 
 runDay day = (days !! (day - 1)) day

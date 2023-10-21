@@ -1,4 +1,4 @@
-module Days.Day10 where
+module Solutions.Year2022.Day10 where
 
 import Data.List (intercalate)
 import Data.List.Split (chunksOf)

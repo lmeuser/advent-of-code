@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.35.0.
+-- This file has been generated from package.yaml by hpack version 0.36.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -11,23 +11,23 @@ build-type:     Simple
 executable aoc22
   main-is: Main.hs
   other-modules:
-      Days.Day1
-      Days.Day10
-      Days.Day11
-      Days.Day12
-      Days.Day13
-      Days.Day14
-      Days.Day15
-      Days.Day16
-      Days.Day2
-      Days.Day3
-      Days.Day4
-      Days.Day5
-      Days.Day6
-      Days.Day7
-      Days.Day8
-      Days.Day9
       Shared
+      Solutions.Year2022.Day1
+      Solutions.Year2022.Day10
+      Solutions.Year2022.Day11
+      Solutions.Year2022.Day12
+      Solutions.Year2022.Day13
+      Solutions.Year2022.Day14
+      Solutions.Year2022.Day15
+      Solutions.Year2022.Day16
+      Solutions.Year2022.Day2
+      Solutions.Year2022.Day3
+      Solutions.Year2022.Day4
+      Solutions.Year2022.Day5
+      Solutions.Year2022.Day6
+      Solutions.Year2022.Day7
+      Solutions.Year2022.Day8
+      Solutions.Year2022.Day9
       Paths_aoc22
   hs-source-dirs:
       src

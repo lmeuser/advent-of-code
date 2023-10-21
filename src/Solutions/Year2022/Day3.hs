@@ -1,4 +1,4 @@
-module Days.Day3 where
+module Solutions.Year2022.Day3 where
 
 import Data.Char ( ord )
 import Data.List.Split ( chunksOf )

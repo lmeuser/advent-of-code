@@ -1,4 +1,4 @@
-module Days.Day2 where
+module Solutions.Year2022.Day2 where
 
 import Shared ( runSolution )
 import Text.Megaparsec

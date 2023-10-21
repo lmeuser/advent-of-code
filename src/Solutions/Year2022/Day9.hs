@@ -1,4 +1,4 @@
-module Days.Day9 where
+module Solutions.Year2022.Day9 where
 
 import Data.List (group, sort)
 import Text.Megaparsec

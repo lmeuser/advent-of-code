@@ -1,4 +1,4 @@
-module Days.Day8 where
+module Solutions.Year2022.Day8 where
 
 import Data.Char (digitToInt)
 import qualified Data.Map as M

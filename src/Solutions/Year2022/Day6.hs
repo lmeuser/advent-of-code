@@ -1,4 +1,4 @@
-module Days.Day6 where
+module Solutions.Year2022.Day6 where
 
 import Data.List (findIndex, nub, tails)
 import Data.Maybe (fromJust)

@@ -1,4 +1,4 @@
-module Days.Day16 where
+module Solutions.Year2022.Day16 where
 
 import Data.List (permutations, sort)
 import qualified Data.Map as M

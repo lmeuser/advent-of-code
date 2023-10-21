@@ -1,4 +1,4 @@
-module Days.Day11 where
+module Solutions.Year2022.Day11 where
 
 import Data.List (sortBy)
 import qualified Data.Map as M

@@ -1,4 +1,4 @@
-module Days.Day7 where
+module Solutions.Year2022.Day7 where
 
 import Data.List (intercalate, inits)
 import Data.List.Split (splitOn)
