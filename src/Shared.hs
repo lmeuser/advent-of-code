@@ -1,6 +1,6 @@
 module Shared where
 
-import Data.Map (fromList)
+import Data.Map (fromList, Map)
 import Data.Void ( Void )
 import Text.Megaparsec ( Parsec, runParser )
 
@@ -23,4 +23,7 @@ runSolution parser solve1 solve2 day = do
                            print . solve2 $ parsed
     putStrLn ""
 
-listsToMap coords = fromList [((row, col), value) | (row, rowDigits) <- zip [0..] coords, (col, value) <- zip [0..] rowDigits]
+buildMapList coords = [((row, col), value) | (row, rowDigits) <- zip [0..] coords, (col, value) <- zip [0..] rowDigits]
+
+listsToMap :: Integral a => [[b]] -> Map (a, a) b
+listsToMap = fromList . buildMapList
