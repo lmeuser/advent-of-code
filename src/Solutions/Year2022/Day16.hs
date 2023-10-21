@@ -1,3 +1,7 @@
+-- this file is work in progress and doesn't work
+-- I stopped working on it at some point and then didn't look at it
+-- for ages, so I have no idea what the current state is
+
 module Solutions.Year2022.Day16 where
 
 import Data.List (permutations, sort)

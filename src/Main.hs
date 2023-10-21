@@ -5,7 +5,7 @@ import System.Console.CmdArgs
 
 import Solutions.All (years)
 
-runDay year day = ((years !! (year - 2015)) !! (day - 1)) day
+runDay year day = ((years !! (year - 2015)) !! (day - 1)) day year
 runYear year = mapM_ (runDay year) [1.. length (years !! (year - 2015))]
 runAll = mapM_ runYear [2015..2022]
 
