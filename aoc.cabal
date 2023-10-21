@@ -13,6 +13,21 @@ executable aoc
   other-modules:
       Shared
       Solutions.All
+      Solutions.Year2021.Day1
+      Solutions.Year2021.Day10
+      Solutions.Year2021.Day11
+      Solutions.Year2021.Day12
+      Solutions.Year2021.Day13
+      Solutions.Year2021.Day14
+      Solutions.Year2021.Day15
+      Solutions.Year2021.Day2
+      Solutions.Year2021.Day3
+      Solutions.Year2021.Day4
+      Solutions.Year2021.Day5
+      Solutions.Year2021.Day6
+      Solutions.Year2021.Day7
+      Solutions.Year2021.Day8
+      Solutions.Year2021.Day9
       Solutions.Year2022.Day1
       Solutions.Year2022.Day10
       Solutions.Year2022.Day11
