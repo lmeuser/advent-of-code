@@ -16,6 +16,7 @@ executable aoc
       Solutions.Year2015.Day1
       Solutions.Year2015.Day2
       Solutions.Year2015.Day3
+      Solutions.Year2015.Day4
       Solutions.Year2021.Day1
       Solutions.Year2021.Day10
       Solutions.Year2021.Day11
@@ -52,8 +53,11 @@ executable aoc
       src
   build-depends:
       base
+    , base16-bytestring
+    , bytestring
     , cmdargs
     , containers
+    , cryptohash-md5
     , heap
     , megaparsec
     , split

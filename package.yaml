@@ -8,8 +8,11 @@ executable:
 
 dependencies:
   - base
-  - split
-  - megaparsec
-  - containers
-  - heap
+  - base16-bytestring
+  - bytestring
   - cmdargs
+  - containers
+  - cryptohash-md5
+  - heap
+  - megaparsec
+  - split
