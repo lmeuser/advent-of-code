@@ -1,5 +1,7 @@
 module Solutions.All where
 
+import qualified Solutions.Year2015.Day1
+
 import qualified Solutions.Year2021.Day1
 import qualified Solutions.Year2021.Day2
 import qualified Solutions.Year2021.Day3
@@ -34,14 +36,16 @@ import qualified Solutions.Year2022.Day15
 -- import qualified Solutions.Year2022.Day16
 
 years = [
-  [],
+  [
+      Solutions.Year2015.Day1.solution
+  ],
   [],
   [],
   [],
   [],
   [],
   [
-    Solutions.Year2021.Day1.solution
+      Solutions.Year2021.Day1.solution
     , Solutions.Year2021.Day2.solution
     , Solutions.Year2021.Day3.solution
     , Solutions.Year2021.Day4.solution
@@ -59,7 +63,7 @@ years = [
 
   ],
   [
-    Solutions.Year2022.Day1.solution
+      Solutions.Year2022.Day1.solution
     , Solutions.Year2022.Day2.solution
     , Solutions.Year2022.Day3.solution
     , Solutions.Year2022.Day4.solution

@@ -18,7 +18,7 @@ data Arguments = Arguments {
 
 arguments = Arguments { year = def, day = def }
 
-validYear year = year >= 2021 && year <= 2022
+validYear year = year >= 2015 && year <= 2022
 validDay year day = validYear year && day >= 1 && day <= length (years !! (year - 2015))
 
 main :: IO ()
