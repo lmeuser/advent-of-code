@@ -24,4 +24,5 @@ solve1 = solveFor "00000"
 solve2 :: String -> Int
 solve2 = solveFor "000000"
 
+solution :: SolutionRunner
 solution = runSolution parser solve1 solve2

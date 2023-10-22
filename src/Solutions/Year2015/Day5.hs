@@ -27,6 +27,5 @@ solve2 = length . filter nice
           sepRepeat (a:b:c:xs) = a == c || sepRepeat (b:c:xs)
           sepRepeat _ = False
 
-
 solution :: SolutionRunner
 solution = runSolution parser solve1 solve2
