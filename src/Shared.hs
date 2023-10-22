@@ -12,6 +12,8 @@ newtype DisplayString = DisplayString String
 instance Show DisplayString where
     show (DisplayString s) = s
 
+type SolutionRunner = Int -> Int -> IO ()
+
 runSolution :: (Show b1, Show b2) => Parser a -> (a -> b1) -> (a -> b2) -> Int -> Int -> IO ()
 runSolution parser solve1 solve2 day year = do
     let dayStr = show day
