@@ -4,6 +4,7 @@ import qualified Solutions.Year2015.Day1
 import qualified Solutions.Year2015.Day2
 import qualified Solutions.Year2015.Day3
 import qualified Solutions.Year2015.Day4
+import qualified Solutions.Year2015.Day5
 
 import qualified Solutions.Year2021.Day1
 import qualified Solutions.Year2021.Day2
@@ -44,6 +45,7 @@ years = [
     , Solutions.Year2015.Day2.solution
     , Solutions.Year2015.Day3.solution
     , Solutions.Year2015.Day4.solution
+    , Solutions.Year2015.Day5.solution
   ],
   [],
   [],
