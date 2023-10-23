@@ -3,7 +3,6 @@ module Solutions.Year2015.Day3 where
 import qualified Data.Set as Set
 import Text.Megaparsec
 import Text.Megaparsec.Char
-
 import Shared
 
 parser :: Parser String

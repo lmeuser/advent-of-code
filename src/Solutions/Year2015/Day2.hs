@@ -4,7 +4,6 @@ import Data.List (sort)
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Text.Megaparsec.Char.Lexer
-
 import Shared
 
 data Paper = Paper Int Int Int

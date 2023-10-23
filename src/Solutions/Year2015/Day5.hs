@@ -3,7 +3,6 @@ module Solutions.Year2015.Day5 where
 import Data.List.Split (divvy)
 import Text.Megaparsec
 import Text.Megaparsec.Char
-
 import Shared
 
 parser :: Parser [String]

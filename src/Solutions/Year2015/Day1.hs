@@ -2,7 +2,6 @@ module Solutions.Year2015.Day1 where
 
 import Text.Megaparsec
 import Text.Megaparsec.Char
-
 import Shared
 
 parser :: Parser String
@@ -14,7 +13,6 @@ next ')' = subtract 1
 
 solve1 :: String -> Int
 solve1 = foldl (flip next) 0
-
 
 solve2 :: String -> Int
 solve2 = step 0 0
