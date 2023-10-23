@@ -7,6 +7,7 @@ executable:
   main: Main.hs
 
 dependencies:
+  - array
   - base
   - base16-bytestring
   - bytestring

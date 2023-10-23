@@ -54,7 +54,8 @@ executable aoc
   hs-source-dirs:
       src
   build-depends:
-      base
+      array
+    , base
     , base16-bytestring
     , bytestring
     , cmdargs
