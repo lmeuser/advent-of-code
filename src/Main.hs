@@ -7,7 +7,7 @@ import Solutions.All (years)
 
 runDay year day = ((years !! (year - 2015)) !! (day - 1)) day year
 runYear year = mapM_ (runDay year) [1.. length (years !! (year - 2015))]
-runAll = mapM_ runYear [2015..2022]
+runAll = mapM_ runYear [2015..2023]
 
 
 data Arguments = Arguments {
@@ -18,7 +18,7 @@ data Arguments = Arguments {
 
 arguments = Arguments { year = def, day = def }
 
-validYear year = year >= 2015 && year <= 2022
+validYear year = year >= 2015 && year <= 2023
 validDay year day = validYear year && day >= 1 && day <= length (years !! (year - 2015))
 
 main :: IO ()

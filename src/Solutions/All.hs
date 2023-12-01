@@ -41,6 +41,8 @@ import qualified Solutions.Year2022.Day14
 import qualified Solutions.Year2022.Day15
 -- import qualified Solutions.Year2022.Day16
 
+import qualified Solutions.Year2023.Day1
+
 years = [
   [
       Solutions.Year2015.Day1.solution
@@ -91,5 +93,8 @@ years = [
     , Solutions.Year2022.Day14.solution
     , Solutions.Year2022.Day15.solution
     -- , Solutions.Year2022.Day16.solution
+  ],
+  [
+      Solutions.Year2023.Day1.solution
   ]
   ]
