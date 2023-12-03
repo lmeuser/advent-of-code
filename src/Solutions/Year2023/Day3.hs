@@ -43,8 +43,8 @@ parser = neighborMap . positionMap <$> many token
         intToken = Token . Number <$> decimal
         symbolToken = Token . Symbol <$> asciiChar
 
-reverseMap = M.foldrWithKey helper M.empty
-  where helper posn (n, ts) m' = foldr addNumber m' . filter ((== '*') . snd) $ ts
+reverseMap = M.foldr helper M.empty
+  where helper (n, ts) m = foldr addNumber m . filter ((== '*') . snd) $ ts
           where addNumber (posc, _) = M.insertWith (++) posc [n]
 
 solve1 = M.foldl (\acc (n, ss) -> acc + if not (null ss) then n else 0) 0
