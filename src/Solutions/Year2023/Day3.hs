@@ -2,7 +2,7 @@
 module Solutions.Year2023.Day3 where
 
 import qualified Data.Map as M
-import Data.Maybe (mapMaybe, isJust, catMaybes)
+import Data.Maybe (mapMaybe)
 import Text.Megaparsec hiding (Token)
 import Text.Megaparsec.Char
 import Text.Megaparsec.Char.Lexer
