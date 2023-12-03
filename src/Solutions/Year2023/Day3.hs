@@ -23,8 +23,8 @@ positionMap = M.fromList . third . foldl helper (0, 0, [])
                                       Linebreak -> (rpos + 1, 0, xs)
         third (_, _, x) = x
 
-neighborMap m  = M.mapWithKey helper . M.filter isNumber $ m
-  where helper (row, col) (Number n) = (n, neighborTokens)
+neighborMap m  = map helper . filter (isNumber . snd) . M.toAscList $ m
+  where helper ((row, col), Number n) = (n, neighborTokens)
           where neighborTokens = mapMaybe checkToken $ neighborCoords row col (length . show $ n)
                 checkToken p = case m M.!? p of
                                  Nothing -> Nothing
@@ -43,11 +43,11 @@ parser = neighborMap . positionMap <$> many token
         intToken = Token . Number <$> decimal
         symbolToken = Token . Symbol <$> asciiChar
 
-reverseMap = M.foldr helper M.empty
+reverseMap = foldr helper M.empty
   where helper (n, ts) m = foldr addNumber m . filter ((== '*') . snd) $ ts
           where addNumber (posc, _) = M.insertWith (++) posc [n]
 
-solve1 = M.foldl (\acc (n, ss) -> acc + if not (null ss) then n else 0) 0
-solve2 = M.foldl (\acc ns -> acc + if length ns == 2 then product ns else 0) 0 . reverseMap
+solve1 = foldl (\acc (n, ss) -> acc + if not (null ss) then n else 0) 0
+solve2 = foldl (\acc ns -> acc + if length ns == 2 then product ns else 0) 0 . reverseMap
 
 solution = runSolution parser solve1 solve2
