@@ -23,7 +23,7 @@ positionMap = M.fromList . third . foldl helper (0, 0, [])
                                       Linebreak -> (rpos + 1, 0, xs)
         third (_, _, x) = x
 
-neighborSymbols m  = map helper . filter (isNumber . snd) . M.toAscList $ m
+neighborSymbols m = filter (not . null . snd) . map helper . filter (isNumber . snd) . M.toAscList $ m
   where helper ((row, col), Number n) = (n, neighborTokens)
           where neighborTokens = mapMaybe checkToken $ neighborCoords row col (length . show $ n)
                 checkToken p = case m M.!? p of
@@ -43,11 +43,11 @@ parser = neighborSymbols . positionMap <$> many token
         intToken = Token . Number <$> decimal
         symbolToken = Token . Symbol <$> asciiChar
 
-neighborNumbers = foldr helper M.empty
-  where helper (n, ts) m = foldr addNumber m . filter ((== '*') . snd) $ ts
-          where addNumber (posc, _) = M.insertWith (++) posc [n]
+neighborNumbers = M.elems . foldr helper M.empty
+  where helper (n, ts) m = foldr (addNumber . fst) m . filter ((== '*') . snd) $ ts
+          where addNumber pos = M.insertWith (++) pos [n]
 
-solve1 = foldl (\acc (n, ss) -> acc + if not (null ss) then n else 0) 0
-solve2 = foldl (\acc ns -> acc + if length ns == 2 then product ns else 0) 0 . neighborNumbers
+solve1 = sum . map fst
+solve2 = sum . map product . filter ((== 2) . length) . neighborNumbers
 
 solution = runSolution parser solve1 solve2
