@@ -53,6 +53,7 @@ executable aoc
       Solutions.Year2022.Day9
       Solutions.Year2023.Day1
       Solutions.Year2023.Day2
+      Solutions.Year2023.Day3
       Paths_aoc
   hs-source-dirs:
       src
