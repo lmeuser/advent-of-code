@@ -8,6 +8,8 @@ import qualified Solutions.Year2015.Day5
 import qualified Solutions.Year2015.Day6
 import qualified Solutions.Year2015.Day7
 
+import qualified Solutions.Year2019.Day1
+
 import qualified Solutions.Year2021.Day1
 import qualified Solutions.Year2021.Day2
 import qualified Solutions.Year2021.Day3
@@ -59,7 +61,9 @@ years = [
   [],
   [],
   [],
-  [],
+  [
+      Solutions.Year2019.Day1.solution
+  ],
   [],
   [
       Solutions.Year2021.Day1.solution
