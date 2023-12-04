@@ -1,19 +1,18 @@
 module Solutions.Year2023.Day4 where
 
 import Data.List (intersect)
+import Data.Maybe (isJust, fromJust)
 import qualified Data.Map as M
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Text.Megaparsec.Char.Lexer
 
 import Shared
-import Data.Maybe (isJust, fromJust)
 
 data Card = Card [Int] [Int]
 
 parser = sepBy card newline
-  where card :: Parser Card
-        card = Card <$> (header *> numberList) <*> (separator *> numberList)
+  where card = Card <$> (header *> numberList) <*> (separator *> numberList)
         header = string "Card" *> space1 *> decimal *> char ':' *> space1
         separator = string "|" *> space1
         numberList = sepEndBy decimal (some (char ' '))
