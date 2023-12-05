@@ -14,7 +14,7 @@ parser = (,) <$> seeds <* doubleNew <*> sepBy mapping newline
   where seeds = string "seeds: " *> sepBy decimal (char ' ')
         doubleNew = void (newline *> newline)
         mapping = sortOn (fst . fst) <$> (mappingHeader *> sepEndBy mappingLine newline)
-        mappingHeader = void <$> (many lowerChar <* string "-to-") <* (many lowerChar <* string " map:") <* newline
+        mappingHeader = void <$> many (lowerChar <|> char '-') <* string " map:" <* newline
         mappingLine = buildRangeLen <$> (decimal <* char ' ') <*> (decimal <* char ' ') <*> decimal
         buildRangeLen dst src len = ((src, src + len - 1), dst)
 
