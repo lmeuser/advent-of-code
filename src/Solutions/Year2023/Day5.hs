@@ -45,10 +45,10 @@ applyMapping seeds = sort . helper seeds
 
 applyMappings mappings seeds = foldl applyMapping seeds mappings
 
-solve f (seeds, mappings) = minimum . map fst . applyMappings mappings . f $ seeds
+solve f (seeds, mappings) = head . map fst . applyMappings mappings . sort . f $ seeds
 
-solve1 = solve (map (\x -> (x, x)) . sort)
+solve1 = solve (map (\x -> (x, x)))
 
-solve2 = solve (map (\[a, b] -> (a, a + b - 1)) . sort . chunksOf 2)
+solve2 = solve (map (\[a, b] -> (a, a + b - 1)) . chunksOf 2)
 
 solution = runSolution parser solve1 solve2
