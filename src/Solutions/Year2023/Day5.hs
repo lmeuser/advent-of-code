@@ -1,42 +1,59 @@
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
-{-# HLINT ignore "Use void" #-}
 module Solutions.Year2023.Day5 where
 
-import Data.List (sortOn)
+import Control.Monad (void)
+import Data.List (sortOn, sort)
+import Data.List.Split (chunksOf)
+import Data.Maybe (maybeToList, isNothing)
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Text.Megaparsec.Char.Lexer
 
 import Shared
-import Data.List.Split (chunksOf)
-
-
-newtype Mapping = Mapping [(Int, Int, Int)] deriving Show
-
-buildMapping = Mapping . sortOn snd3
-  where snd3 (_, x, _) = x
 
 parser = (,) <$> seeds <* doubleNew <*> sepBy mapping newline
   where seeds = string "seeds: " *> sepBy decimal (char ' ')
-        doubleNew = () <$ (newline *> newline)
-        mapping = buildMapping <$> (mappingHeader *> sepEndBy mappingLine newline)
-        mappingHeader = (,) <$> (many lowerChar <* string "-to-") <*> (many lowerChar <* string " map:") <* newline
-        mappingLine = (,,) <$> (decimal <* char ' ') <*> (decimal <* char ' ') <*> decimal
+        doubleNew = void (newline *> newline)
+        mapping = sortOn (fst . fst) <$> (mappingHeader *> sepEndBy mappingLine newline)
+        mappingHeader = void <$> (many lowerChar <* string "-to-") <* (many lowerChar <* string " map:") <* newline
+        mappingLine = buildRangeLen <$> (decimal <* char ' ') <*> (decimal <* char ' ') <*> decimal
+        buildRangeLen dst src len = ((src, src + len - 1), dst)
 
-applyMapping n (Mapping m) = helper n m
-  where helper n [] = n
-        helper n ((dst, src, len):xs)
-          | n >= src && n < src + len = n - src + dst
-          | n > src = helper n xs
-          | otherwise = n
+overlap r1@(s1, e1) (s2, e2)
+  | e1 < s2 = (Just r1, Nothing, Nothing)
+  | s1 > e2 = (Nothing, Nothing, Just r1)
+  | otherwise = let pre = if s1 >= s2
+                          then Nothing
+                          else Just (s1, s2 - 1)
+                    post = if e1 <= e2
+                           then Nothing
+                           else Just (e2 + 1, e1)
+                    match = Just (max s1 s2, min e1 e2)
+                in (pre, match, post)
 
-applyMappings mappings seed = foldl applyMapping seed mappings
+mergeRanges (r1@(s1, e1):r2@(s2, e2):rs)
+  | e1 + 1 == s2 = mergeRanges ((s1, e2):rs)
+  | otherwise = r1:mergeRanges (r2:rs)
+mergeRanges rs = rs
 
-solve seeds mappings = minimum . map (applyMappings mappings) $ seeds
+applyMapping seeds = mergeRanges . sort . helper seeds
+  where helper ss [] = ss
+        helper ss@(s:sr) ms@((src@(start, _), dst):mr)
+          | isNothing pre && isNothing match = helper ss mr
+          | otherwise = pre' ++ match' ++ helper left ms
+          where (pre, match, post) = overlap s src
+                dist = dst - start
+                move (a, b) =  (a + dist, b + dist)
+                pre' = maybeToList pre
+                match' = map move . maybeToList $ match
+                left = maybeToList post ++ sr
+        helper [] _ = []
 
-solve1 (seeds, mappings) = solve seeds mappings
+applyMappings mappings seeds = foldl applyMapping seeds mappings
 
-solve2 (seeds, mappings) = solve seeds' mappings
-  where seeds' = concatMap (\[a, b] -> [a..a+b-1]) . chunksOf 2 $ seeds
+solve' f (seeds, mappings) = minimum . map fst . applyMappings mappings . f $ seeds
 
-solution = runSolution parser solve1 solve2
+solve1' = solve' (map (\x -> (x, x)) . sort)
+
+solve2' = solve' (map (\[a, b] -> (a, a + b - 1)) . sort . chunksOf 2)
+
+solution = runSolution parser solve1' solve2'
