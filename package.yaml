@@ -16,4 +16,5 @@ dependencies:
   - cryptohash-md5
   - heap
   - megaparsec
+  - range
   - split
