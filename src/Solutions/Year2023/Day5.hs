@@ -16,11 +16,10 @@ parser = (,) <$> seeds <* newline <* newline <*> sepBy mapping newline
         mappingLine = buildRangeOffset <$> (decimal <* char ' ') <*> (decimal <* char ' ') <*> decimal
         buildRangeOffset dst src len = (src +=* (src + len), dst - src)
 
-applyMappingPart seeds (src, offset) = map (fmap (+ offset)) (intersection seeds [src])
-
 applyMapping seeds m = shifted `union` unshifted
-  where shifted = concatMap (applyMappingPart seeds) m
+  where shifted = concatMap applyMappingPart m
         unshifted = difference seeds (map fst m)
+        applyMappingPart (src, offset) = map (fmap (+ offset)) (intersection seeds [src])
 
 solve f (seeds, mappings) = minimum . map lowerBound . foldl applyMapping (f seeds) $ mappings
   where lowerBound (SpanRange (Bound x Inclusive) _) = x
