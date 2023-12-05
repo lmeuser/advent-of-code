@@ -21,12 +21,12 @@ parser = (,) <$> seeds <* doubleNew <*> sepBy mapping newline
 overlap r1@(s1, e1) (s2, e2)
   | e1 < s2 = (Just r1, Nothing, Nothing)
   | s1 > e2 = (Nothing, Nothing, Just r1)
-  | otherwise = let pre = if s1 >= s2
-                          then Nothing
-                          else Just (s1, s2 - 1)
-                    post = if e1 <= e2
-                           then Nothing
-                           else Just (e2 + 1, e1)
+  | otherwise = let pre = if s1 < s2
+                          then Just (s1, s2 - 1)
+                          else Nothing
+                    post = if e1 > e2
+                           then Just (e2 + 1, e1)
+                           else Nothing
                     match = Just (max s1 s2, min e1 e2)
                 in (pre, match, post)
 
