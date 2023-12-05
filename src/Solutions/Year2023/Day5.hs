@@ -30,12 +30,7 @@ overlap r1@(s1, e1) (s2, e2)
                     match = Just (max s1 s2, min e1 e2)
                 in (pre, match, post)
 
-mergeRanges (r1@(s1, e1):r2@(s2, e2):rs)
-  | e1 + 1 == s2 = mergeRanges ((s1, e2):rs)
-  | otherwise = r1:mergeRanges (r2:rs)
-mergeRanges rs = rs
-
-applyMapping seeds = mergeRanges . sort . helper seeds
+applyMapping seeds = sort . helper seeds
   where helper ss [] = ss
         helper ss@(s:sr) ms@((src@(start, _), dst):mr)
           | isNothing pre && isNothing match = helper ss mr
@@ -50,10 +45,10 @@ applyMapping seeds = mergeRanges . sort . helper seeds
 
 applyMappings mappings seeds = foldl applyMapping seeds mappings
 
-solve' f (seeds, mappings) = minimum . map fst . applyMappings mappings . f $ seeds
+solve f (seeds, mappings) = minimum . map fst . applyMappings mappings . f $ seeds
 
-solve1' = solve' (map (\x -> (x, x)) . sort)
+solve1 = solve (map (\x -> (x, x)) . sort)
 
-solve2' = solve' (map (\[a, b] -> (a, a + b - 1)) . sort . chunksOf 2)
+solve2 = solve (map (\[a, b] -> (a, a + b - 1)) . sort . chunksOf 2)
 
-solution = runSolution parser solve1' solve2'
+solution = runSolution parser solve1 solve2
