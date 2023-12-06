@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.36.0.
+-- This file has been generated from package.yaml by hpack version 0.35.2.
 --
 -- see: https://github.com/sol/hpack
 
@@ -59,6 +59,7 @@ executable aoc
       Solutions.Year2023.Day3
       Solutions.Year2023.Day4
       Solutions.Year2023.Day5
+      Solutions.Year2023.Day6
       Paths_aoc
   hs-source-dirs:
       src
