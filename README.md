@@ -7,3 +7,6 @@ Haskell. Don't judge too harshly. :P
 
 Run with `stack run`, you can optionally pass arguments to only run a single
 year or day, e.g. `stack run -- -y 2022` or `stack run -- -y 2022 -d 3`.
+
+Inputs needs to be stored in text files in the `inputs` directory,
+e.g. `inputs/year2015/day1.txt`.
