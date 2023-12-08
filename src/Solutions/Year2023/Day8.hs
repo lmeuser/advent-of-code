@@ -12,18 +12,15 @@ parser = (,) <$> directions <* count 2 newline <*> links
         link = (,) <$> location <* string " = (" <*> ((,) <$> location <* string ", " <*> location) <* char ')'
         location = count 3 (upperChar <|> digitChar) -- digitChar only needed for demo data
 
-solve1 (path, m) = step (cycle path) m "AAA" 0
-  where step _ _ "ZZZ" n = n
-        step (p:ps) m loc n = step ps m (p (m M.! loc)) (n + 1)
+solve path m isEnd start = step (cycle path) m start 0
+  where step (p:ps) m loc n
+          | isEnd loc = n
+          | otherwise = step ps m (p (m M.! loc)) (n + 1)
 
--- in the given data, end points are always at a multiple of cycle length
--- cf. earlier revision for more general version/explanation
-solve2 (path, m) = foldl1 lcm . map findCycleLength $ starts
-  where starts = filter ((== 'A') . last) (M.keys m)
-        findCycleLength start = helper start (cycle path) 0 M.empty
-          where helper loc (p:ps) n cm = let entry = (loc, n `mod` length path)
-                                         in case cm M.!? entry of
-                                              Just first -> n - first
-                                              Nothing -> helper (p (m M.! loc)) ps (n + 1) (M.insert entry n cm)
+solve1 (path, m) = solve path m (== "ZZZ") "AAA" 
+
+-- in the given data, paths run a cycle and there's only one end point in the cycle (and none before), which
+-- happens to be `cycleLength` steps from the start. This makes this pretty easy (see history for more general code):
+solve2 (path, m) = foldl1 lcm . map (solve path m ((== 'Z') . last)) . filter ((== 'A') . last) . M.keys $ m
 
 solution = runSolution parser solve1 solve2
