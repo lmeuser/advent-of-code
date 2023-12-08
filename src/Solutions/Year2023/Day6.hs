@@ -15,10 +15,10 @@ solveRace (time, target) = length . filter (> target) . distances $ time
     where distances time = map (distance time) [1..time-1]
           distance time press = (time - press) * press
 
-solve1 = product . map solveRace . (uncurry zip)
+solve1 = product . map solveRace . uncurry zip
 
 solve2 = solveRace . fixParse
     where fixParse (times, dists) = (fix times, fix dists)
-          fix = read . concat . map show
+          fix = read . concatMap show
 
 solution = runSolution parser solve1 solve2
