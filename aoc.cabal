@@ -24,6 +24,7 @@ executable aoc
       Solutions.Year2019.Day2
       Solutions.Year2019.Day3
       Solutions.Year2019.Day4
+      Solutions.Year2019.Day5
       Solutions.Year2019.Intcode
       Solutions.Year2021.Day1
       Solutions.Year2021.Day10
