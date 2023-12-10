@@ -1,11 +1,8 @@
-{-# LANGUAGE TupleSections #-}
 module Solutions.Year2023.Day10 where
 
 import Data.Array
 import Data.List (find)
-import qualified Data.Map.Strict as M
 import Data.Maybe (fromJust)
-import qualified Data.Sequence as Seq
 import qualified Data.Set as S
 import Text.Megaparsec
 import Text.Megaparsec.Char
@@ -27,51 +24,42 @@ findPipe a = start:step start first
                              ((sr, sc - 1), "-LFS"),
                              ((sr, sc + 1), "-J7S")]
         next (pr, pc) (r, c) = case (a ! (r, c), (r - pr, c - pc)) of
-                          ('|', (1, 0)) -> (r + 1, c)
-                          ('|', (-1, 0)) -> (r - 1, c)
-                          ('-', (0, 1)) -> (r, c + 1)
-                          ('-', (0, -1)) -> (r, c - 1)
-                          ('L', (1, 0)) -> (r, c + 1)
-                          ('L', (0, -1)) -> (r - 1, c)
-                          ('J', (1, 0)) -> (r, c - 1)
-                          ('J', (0, 1)) -> (r - 1, c)
-                          ('7', (-1, 0)) -> (r, c - 1)
-                          ('7', (0, 1)) -> (r + 1, c)
-                          ('F', (-1, 0)) -> (r, c + 1)
-                          ('F', (0, -1)) -> (r + 1, c)
+                                 ('|', (1, 0)) -> (r + 1, c)
+                                 ('|', (-1, 0)) -> (r - 1, c)
+                                 ('-', (0, 1)) -> (r, c + 1)
+                                 ('-', (0, -1)) -> (r, c - 1)
+                                 ('L', (1, 0)) -> (r, c + 1)
+                                 ('L', (0, -1)) -> (r - 1, c)
+                                 ('J', (1, 0)) -> (r, c - 1)
+                                 ('J', (0, 1)) -> (r - 1, c)
+                                 ('7', (-1, 0)) -> (r, c - 1)
+                                 ('7', (0, 1)) -> (r + 1, c)
+                                 ('F', (-1, 0)) -> (r, c + 1)
+                                 ('F', (0, -1)) -> (r + 1, c)
 
 solve1 = (`div` 2) . length . findPipe
 
+data Direction = Up | Down | None
 
--- this is a pretty ugly and slow solution I think, but I'm too lazy to do it better right now
--- basic idea: expand each field in the original map to a 3x3 with the original pipe piece
--- in the center and connecting pipes on the sides. Then we can just check for fields connected to (0, 0)
--- to get the outside ones. (Without expanding, I think we'd need to check pipe directions etc)
-solve2 a = rangeSize (bounds a) - (S.size . collapse . step (Seq.singleton (0, 0)) $ M.empty)
-  where step q m = case Seq.viewl q of
-                     (r, c) Seq.:< rest -> let shouldVisit pos = filled && inRange (bounds a3) pos && pos `M.notMember` m
-                                               neighbors = filter shouldVisit [(r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)]
-                                               filled = a3 ! (r, c) == ' '
-                                               m' = M.insert (r, c) filled m
-                                               q' = rest Seq.>< Seq.fromList neighbors
-                                            in if (r, c) `M.member` m
-                                               then step rest m
-                                               else step q' m'
-                     Seq.EmptyL -> m
-        a3 = array ((0, 0), (or * 3 + 2, oc * 3 + 2)) . concatMap expand . range . bounds $ a
-        (or, oc) = snd (bounds a)
-        expand (r, c)
-          | (r, c) `S.member` pipe = map (, ' ') [(r3, c3), (r3 + 2, c3), (r3, c3 + 2), (r3 + 2, c3 + 2)] ++
-                     [((r3, c3 + 1), if orig `elem` "|JLS" then '|' else ' '),
-                      ((r3 + 1, c3), if orig `elem` "-J7S" then '-' else ' '),
-                      ((r3 + 2, c3 + 1), if orig `elem` "|7FS" then '|' else ' '),
-                      ((r3 + 1, c3 + 2), if orig `elem` "-FLS" then '-' else ' '),
-                      ((r3 + 1, c3 + 1), orig)]
-          | otherwise = map (, ' ') (range ((r3, c3), (r3 + 2, c3 + 2)))
-          where (r3, c3) = (r * 3, c * 3)
-                orig = a ! (r, c)
-                pipe = S.fromList . findPipe $ a
-        collapse = M.foldrWithKey' step S.empty 
-          where step (r, c) v s = if v then S.insert (r `div` 3, c `div` 3) s else s
+solve2 a = sum . map (\(n, _, _) -> n) $ [foldl (step row) (0, False, None) [0..cols] | row <- [0..rows]]
+  where pipe = S.fromList . findPipe $ a
+        (_, (rows, cols)) = bounds a
+        step row (count, inside, dir) col = let pos = (row, col)
+                                                inPipe = pos `S.member` pipe
+                                                (inside', dir') = if inPipe
+                                                                  then case (a ! pos, dir) of 
+                                                                    ('L', _) -> (inside, Up)
+                                                                    ('F', _) -> (inside, Down)
+                                                                    ('J', Up) -> (inside, None)
+                                                                    ('J', Down) -> (not inside, None)
+                                                                    ('7', Up) -> (not inside, None)
+                                                                    ('7', Down) -> (inside, None)
+                                                                    ('|', _) -> (not inside, None)
+                                                                    ('-', _) -> (inside, dir)
+                                                                    -- this is just hardcoded for whatever S represents in my input
+                                                                    ('S', _) -> (not inside, None)
+                                                                  else (inside, dir)
+                                                count' = count + if inside' && not inPipe then 1 else 0
+                                            in (count', inside', dir')
 
 solution = runSolution parser solve1 solve2
