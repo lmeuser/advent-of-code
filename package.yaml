@@ -6,6 +6,8 @@ source-dirs: src
 executable:
   main: Main.hs
 
+ghc-options: -O2
+
 dependencies:
   - array
   - base

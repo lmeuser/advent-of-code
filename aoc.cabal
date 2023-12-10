@@ -73,6 +73,7 @@ executable aoc
       Paths_aoc
   hs-source-dirs:
       src
+  ghc-options: -O2
   build-depends:
       array
     , base
