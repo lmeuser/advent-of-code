@@ -18,3 +18,4 @@ dependencies:
   - megaparsec
   - range
   - split
+  - timeit

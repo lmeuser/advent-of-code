@@ -59,6 +59,7 @@ import qualified Solutions.Year2023.Day7
 import qualified Solutions.Year2023.Day8
 import qualified Solutions.Year2023.Day9
 import qualified Solutions.Year2023.Day10
+import qualified Solutions.Year2023.Day11
 
 years = [
   [
@@ -130,5 +131,6 @@ years = [
     , Solutions.Year2023.Day8.solution
     , Solutions.Year2023.Day9.solution
     , Solutions.Year2023.Day10.solution
+    , Solutions.Year2023.Day11.solution
   ]
   ]

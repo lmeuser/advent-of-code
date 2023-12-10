@@ -61,6 +61,7 @@ executable aoc
       Solutions.Year2022.Day9
       Solutions.Year2023.Day1
       Solutions.Year2023.Day10
+      Solutions.Year2023.Day11
       Solutions.Year2023.Day2
       Solutions.Year2023.Day3
       Solutions.Year2023.Day4
@@ -84,4 +85,5 @@ executable aoc
     , megaparsec
     , range
     , split
+    , timeit
   default-language: Haskell2010
