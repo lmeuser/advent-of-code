@@ -7,7 +7,7 @@ import System.TimeIt (timeItNamed)
 
 import Solutions.All (years)
 
-runDay time year day = let label = ("day " ++ show year ++ "-" ++ show day)
+runDay time year day = let label = "day " ++ show year ++ "-" ++ show day
                        in wrap time label $ ((years !! (year - 2015)) !! (day - 1)) day year
 runYear time year = let label = "year " ++ show year
                     in wrap time label $ mapM_ (runDay time year) [1.. length (years !! (year - 2015))]
