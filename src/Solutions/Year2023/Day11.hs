@@ -1,8 +1,17 @@
+{-# LANGUAGE TupleSections #-}
 module Solutions.Year2023.Day11 where
 
-import Control.Monad (void)
+import Text.Megaparsec
+import Text.Megaparsec.Char
 
 import Shared
-import Text.Megaparsec (MonadParsec(eof))
+import Data.List (findIndices)
 
-solution = runSolution eof (const ()) (const ())
+parser :: Parser ([(Int, Int)], (Int, Int))
+parser = process <$> sepBy line newline
+  where line = many ((True <$ char '#') <|> (False <$ char '.'))
+        process rs = let bounds = (length rs, length (head rs))
+                         out = concat [map (row,) (findIndices id l) | (row, l) <- zip [0..] rs]
+                     in (out, bounds)
+
+solution = runSolution eof (const ()) id

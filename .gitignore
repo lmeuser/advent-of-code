@@ -4,3 +4,4 @@
 *.iml
 .idea
 inputs/*/*.txt
+**/.DS_Store
