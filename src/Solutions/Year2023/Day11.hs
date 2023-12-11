@@ -1,7 +1,7 @@
 {-# LANGUAGE TupleSections #-}
 module Solutions.Year2023.Day11 where
 
-import qualified Data.IntMap as M
+import Data.Array
 import Data.List (findIndices, nub, sort)
 import Text.Megaparsec
 import Text.Megaparsec.Char
@@ -16,15 +16,15 @@ parser = process <$> sepBy line newline
 
 expand size (xs, (maxR, maxC)) = map replace xs
   where (rs, cs) = unzip xs
-        rowMap = M.fromList . buildMapping maxR . nub . sort $ rs
-        colMap = M.fromList . buildMapping maxC . nub . sort $ cs
-        buildMapping end xs = step [0..end] xs 0
+        rowMap = array (0, maxR - 1) . buildMapping maxR . nub . sort $ rs
+        colMap = array (0, maxR - 1) . buildMapping maxC . nub . sort $ cs
+        buildMapping end xs = step [0..end-1] xs 0
           where step (i:is) xs@(x:xr) c
                   | i == x = (i, c):step is xr (c+1)
                   | otherwise = (i, c):step is xs (c+size)
                 step (i:is) [] c = (i, c):step is [] (c+1)
                 step [] [] _ = []
-        replace (r, c) = (rowMap M.! r, colMap M.! c)
+        replace (r, c) = (rowMap ! r, colMap ! c)
 
 solve size = sum . map dist . pairs . expand size
   where dist ((a, b), (c, d)) = abs (a - c) + abs (b - d)
