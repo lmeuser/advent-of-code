@@ -1,5 +1,6 @@
 module Solutions.Year2023.Day16 where
 
+import Control.Parallel.Strategies (parMap, rdeepseq)
 import Data.Array
 import Prelude hiding (Left, Right)
 import Text.Megaparsec
@@ -58,6 +59,6 @@ solve2 inp = let (r, c) = snd . bounds $ inp
                  bottom = map (\n -> ((r, n), Up)) [0..c]
                  left = map (\n -> ((n, 0), Right)) [0..r]
                  right = map (\n -> ((n, c), Left)) [0..r]
-             in maximum . map (calc inp) $ top ++ bottom ++ left ++ right
+             in maximum . parMap rdeepseq (calc inp) $ top ++ bottom ++ left ++ right
 
 solution = runSolution parser solve1 solve2
