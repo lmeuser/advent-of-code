@@ -18,6 +18,7 @@ dependencies:
   - cryptohash-md5
   - heap
   - megaparsec
+  - MemoTrie
   - parallel
   - range
   - split

@@ -80,7 +80,8 @@ executable aoc
       src
   ghc-options: -O2 -threaded
   build-depends:
-      array
+      MemoTrie
+    , array
     , base
     , base16-bytestring
     , bytestring
